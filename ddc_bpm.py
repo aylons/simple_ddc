@@ -99,12 +99,15 @@ cordic = float_cordic()
 sink = blocks.vector_sink_f()
 
 tb.connect(source, head)
-tb.connect(head, ddc_mixer)
+tb.connect(head, (ddc_mixer,0))
+
 tb.connect((ddc_mixer,0), filter_I)
 tb.connect((ddc_mixer,1), filter_Q)
+
 tb.connect(filter_I, (cordic,0))
 tb.connect(filter_Q, (cordic,1))
-tb.connect((cordic,1),sink)
+
+tb.connect((cordic,0),sink)
 
 tb.run()
 
